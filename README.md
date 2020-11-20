@@ -1,5 +1,5 @@
 
-# Talao.co API Demo Members Base v0.1
+# Talao.co API Demo Members Base v0.2
 
 This is a demo for talao.co's API
 
