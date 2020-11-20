@@ -28,7 +28,7 @@ If you don't have them contact contact@talao.io
 Launch using:
 
 ```bash
-$ export FLASK_APP=talao_api_use_case_2
+$ export FLASK_APP=demo
 $ export FLASK_DEBUG=1
 $ flask run
 ```
