@@ -8,7 +8,7 @@ import json, requests
 auth = Blueprint('auth', __name__)
 
 # Get your own credentials from talao.co !
-with open('talao_api_use_case_2/client_credentials.json') as c:
+with open('demo/client_credentials.json') as c:
     credentials = json.load(c)[0]
 
 client_id = credentials["id"]

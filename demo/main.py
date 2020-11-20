@@ -1,4 +1,4 @@
-# export FLASK_APP=talao_api_use_case_2
+# export FLASK_APP=demo
 # export FLASK_DEBUG=1
 from urllib.parse import urlencode
 from flask import Blueprint, render_template, request, session, redirect
@@ -10,7 +10,7 @@ import random, json, requests
 main = Blueprint('main', __name__)
 
 # Get your own credentials from talao.co !
-with open('talao_api_use_case_2/client_credentials.json') as c:
+with open('demo/client_credentials.json') as c:
     credentials = json.load(c)[0]
 
 client_id = credentials["id"]
