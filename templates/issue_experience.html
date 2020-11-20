@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Issue an experience certificate to {{name}}:</h1>
+
+<form name="form" action="/issue_experience" method="POST">
+  <div class="form-group"><label><strong>Did</strong><br></label><input class="form-control" value={{did}} style="width:500px;" name="did" readonly ></div>
+  <div class="form-group"><label><strong>Title</strong><br></label><input class="form-control" type="text" name="title" required ></div>
+  <div class="form-group"><label><strong>Description</strong><br></label><textarea class="form-control" style="width:800px; height:200px;" type="text" name="description" required ></textarea></div>
+  <div class="form-group"><label><strong>Start date (YYYY-MM-DD)</strong><br></label><input class="form-control" style="width:300px;" type="text" name="start_date" required ></div>
+  <div class="form-group"><label><strong>End date (YYYY-MM-DD)</strong><br></label><input class="form-control" style="width:300px;" type="text" name="end_date" required ></div>
+  <div class="form-group"><label><strong>Score recommendation (0-5)</strong><br></label><input class="form-control" style="width:300px;" type="number" name="score_recommendation" required ></div>
+  <div class="form-group"><label><strong>Score delivery (0-5)</strong><br></label><input class="form-control" style="width:300px;" type="number" name="score_delivery" required ></div>
+  <div class="form-group"><label><strong>Score schedule (0-5)</strong><br></label><input class="form-control" style="width:300px;" type="number" name="score_schedule" required ></div>
+  <div class="form-group"><label><strong>Score communication (0-5)</strong><br></label><input class="form-control" style="width:300px;" type="number" name="score_communication" required ></div>
+  <div class="form-group"><button type="submit">Add</button></div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+# fichier a exclure
+
+__pycache__/*
+client_credentials.json
+*.sqlite

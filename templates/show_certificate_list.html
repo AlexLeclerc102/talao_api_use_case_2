@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Certificate list:</h1>
+<hr>
+{% for certificate in certificate_list%}
+  <p>title : {{certificate["title"]}} <br>
+    start_date : {{certificate["start_date"]}} <br>
+    end_date : {{certificate["end_date"]}} <br>
+    type : {{certificate["type"]}} <br>
+    description : {{certificate["description"]}} <br>
+    skills : {{certificate["skills"]}}</p>
+  <hr>
+{% endfor%}
+<a href="/"><button>Home</button></a>
+{% endblock %}

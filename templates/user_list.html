@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<hr>
+{% for user in user_list %}
+
+  <p> Name : {{user.name}} <br>
+      Username : {{user.username}} <br>
+      did : {{user.did}} <br>
+      email : {{user.email}} </p>
+  <a href="/add_referent?did_referent={{user.did}}"><button type="button" name="button">Add to referent list</button></a>
+  <form name="form" action="/issue_certificate?did={{user.did}}" method="POST">
+  <strong>Issue a certificate : <br></strong>
+  <div class="form-group"><label>Type: </label><select class="mx-5" name="type" required>
+      <option selected value="experience"> Experience </option>
+      <option value="recommendation"> Recommendation </option>
+      <option value="agreement"> Agreement </option>
+      <option value="skills"> Skills </option>
+      <option value="educational"> Education </option>
+    </select>
+  <button type="submit">Issue certificate</button></div>
+  </form>
+  <form name="form" action="/get_certificate_list?did={{user.did}}" method="POST">
+  <strong>List certificates : <br></strong>
+  <div class="form-group" style="margin-bottom:20px;"><label>Type: </label><select class="mx-5" name="type" required>
+      <option selected value="experience"> Experience </option>
+      <option value="all"> all </option>
+      <option value="recommendation"> Recommendation </option>
+      <option value="agreement"> Agreement </option>
+      <option value="skills"> Skills </option>
+      <option value="educational"> Education </option>
+    </select>
+  <button type="submit">Show</button></div>
+</form>
+  <hr>
+{% endfor %}
+
+{% endblock %}
