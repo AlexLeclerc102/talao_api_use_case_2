@@ -89,6 +89,40 @@ def get_certificate(id, token_data):
     response = requests.post('https://talao.co/api/v1/get_certificate', data=json.dumps(data), headers=headers)
     return response.json()
 
+@main.route('/update_company_settings', methods=['GET', 'POST'])
+@login_required
+def update_company_settings():
+    if request.method == 'GET' :
+        data = {
+                'response_type': 'code',
+                'client_id': client_id,
+                'state': str(random.randint(0, 99999)),
+                'nonce' : 'test',
+                'redirect_uri': url_callback,
+                'scope': 'user:manage:data',
+            }
+        session['state'] = data['state']
+        session['endpoint'] = 'user_updates_company_settings'
+        print('step 1 : demande d autorisation envoyée ')
+        return redirect("https://talao.co/api/v1/authorize" + '?' + urlencode(data))
+    if request.method == 'POST' :
+        headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer %s' % session['token_data']['access_token']}
+        data = {'name' : request.form['name'], 'staff' : request.form['staff'],
+                'contact_email' : request.form['contact_email'],
+                'contact_phone' : request.form['contact_phone'],
+                'website' : request.form['website'],
+                'about' : request.form['about'],
+                'sales' : request.form['sales'],
+                'mother_company' : request.form['mother_company'],
+                'siren' : request.form['siren'],
+                'postal_address' : request.form['postal_address'],
+                'contact_name' : request.form['contact_name']}
+        endpoint_response = requests.post('https://talao.co/api/v1/user_updates_company_settings', data=json.dumps(data), headers=headers)
+        del session['token_data']
+        del session['state']
+        del session['endpoint']
+        return redirect("/profile")
+
 @main.route('/issue_certificate', methods=['POST'])
 @login_required
 def issue_certificate():
@@ -181,6 +215,13 @@ def callback():
             del session['endpoint']
             del session['did_referent']
             return "Referent added"
+        elif session['endpoint'] == 'user_updates_company_settings' :
+            headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer %s' % token_data['access_token']}
+            data = {}
+            session['token_data'] = token_data
+            endpoint_response = requests.post('https://talao.co/api/v1/user_updates_company_settings', data=json.dumps(data), headers=headers)
+            print(endpoint_response.json())
+            return render_template('update_company_settings.html', settings = endpoint_response.json())
         elif session['endpoint'] == 'user_issues_certificate' :
             headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer %s' % token_data['access_token']}
             data = {'did_issued_to' : session['did'], 'certificate_type' : session['certificate_type'], 'certificate' : session['certificate_to_be_issued']}

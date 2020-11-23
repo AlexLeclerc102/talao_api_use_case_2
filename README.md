@@ -1,5 +1,5 @@
 
-# Talao.co API Demo Members Base v0.2
+# Talao.co API Demo Members Base v0.3
 
 This is a demo for talao.co's API
 
@@ -9,7 +9,7 @@ Use Case: A group which has a base of members (companies), wishes to propose to 
 https://talao.readthedocs.io/en/latest/api/
 ## Installation
 
-Clone this repository : 
+Clone this repository :
 
 ```bash
 git clone https://github.com/AlexLeclerc102/talao_api_use_case_2.git
@@ -38,4 +38,3 @@ By default this app will launch on 127.0.0.1:5000
 ## License
 
 See the [LICENSE](https://github.com/AlexLeclerc102/talao_api_use_case_2/blob/master/LICENSE) file for license rights and limitations (MIT).
-

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Update your company information</h1>
+
+<form name="form" action="/update_company_settings" method="POST">
+  <div class="form-group"><label><strong>Name</strong><br></label><input class="form-control" value="{{settings['name']}}"  name="name" required ></div>
+  <div class="form-group"><label><strong>Contact name</strong><br></label><input class="form-control" value="{{settings['contact_name']}}" type="text" name="contact_name"  ></div>
+  <div class="form-group"><label><strong>Contact email</strong><br></label><input class="form-control" value="{{settings['contact_email']}}" type="text" name="contact_email"  ></div>
+  <div class="form-group"><label><strong>Contact phone</strong><br></label><input class="form-control" value="{{settings['contact_phone']}}"  type="text" name="contact_phone"  ></div>
+  <div class="form-group"><label><strong>Website</strong><br></label><input class="form-control" value="{{settings['website']}}"  type="text" name="website"  ></div>
+  <div class="form-group"><label><strong>About</strong><br></label><textarea class="form-control" type="text" name="about" required >{{settings['about']}}</textarea></div>
+  <div class="form-group"><label><strong>Staff</strong><br></label><input class="form-control" value="{{settings['staff']}}"  type="number" name="staff"  ></div>
+  <div class="form-group"><label><strong>Sales</strong><br></label><input class="form-control" value="{{settings['sales']}}"  type="number" name="sales"  ></div>
+  <div class="form-group"><label><strong>Mother company</strong><br></label><input class="form-control" value="{{settings['mother_company']}}"  type="text" name="mother_company"  ></div>
+  <div class="form-group"><label><strong>Siren</strong><br></label><input class="form-control" value="{{settings['siren']}}"  type="text" name="siren" required ></div>
+  <div class="form-group"><label><strong>Postal address</strong><br></label><input class="form-control" value="{{settings['postal_address']}}"  type="text" name="postal_address"  ></div>
+  <div class="form-group"><button type="submit">Add</button></div>
+</form>
+
+{% endblock %}
