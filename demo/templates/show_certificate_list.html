@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <h1>Certificate list:</h1>
-<hr>
-{% for certificate in certificate_list%}
-  <p>title : {{certificate["title"]}} <br>
-    start_date : {{certificate["start_date"]}} <br>
-    end_date : {{certificate["end_date"]}} <br>
-    type : {{certificate["type"]}} <br>
-    description : {{certificate["description"]}} <br>
-    skills : {{certificate["skills"]}}</p>
-  <hr>
-{% endfor%}
-<a href="/"><button>Home</button></a>
+
+<div class="row justify-content-center">
+  {% for certificate in certificate_list%}
+  <div class="card shadow m-3">
+    <div class="card-header">
+      <h3><b>Title</b> : {{certificate["title"]}} </h3>
+    </div>
+    <div class="card-body">
+      <p><b>Start date</b> : {{certificate["start_date"]}} <br>
+         <b>End date</b> : {{certificate["end_date"]}} <br>
+         <b>Type</b>: {{certificate["type"]}} <br>
+         <b>Description</b>: {{certificate["description"]}} <br>
+         <b>Skills</b>: {{certificate["skills"]}}</p>
+    </div>
+  </div>
+  {% endfor%}
+</div>
+
 {% endblock %}

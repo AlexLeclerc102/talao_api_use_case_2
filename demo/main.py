@@ -1,9 +1,9 @@
 # export FLASK_APP=demo
 # export FLASK_DEBUG=1
 from urllib.parse import urlencode
-from flask import Blueprint, render_template, request, session, redirect
+from flask import Blueprint, render_template, request, session, redirect, flash
 from . import db
-from .models import User
+from .models import User, Pending_certificate
 from flask_login import login_required, current_user
 import random, json, requests
 
@@ -33,7 +33,7 @@ def profile():
 @main.route('/user_list')
 @login_required
 def user_list():
-    user_list = User.query.all()
+    user_list = User.query.filter(User.email != current_user.email).all()
     return render_template('user_list.html',user_list = user_list)
 
 @main.route('/get_certificate_list', methods=['POST'])
@@ -167,7 +167,7 @@ def issue_experience():
         return redirect("https://talao.co/api/v1/authorize" + '?' + urlencode(data))
 
 
-@main.route('/add_referent', methods=['GET'])
+@main.route('/add_referent', methods=['GET','POST'])
 @login_required
 def add_referent():
     data = {
@@ -180,9 +180,28 @@ def add_referent():
     }
     session['did_referent'] = request.args['did_referent']
     session['state'] = data['state']
+    session['asking'] = (request.args['asking'] == "true")
     session['endpoint'] = 'user_adds_referent'
+    if session['asking']:
+        session['certificate_type'] = request.form['type']
     print('step 1 : demande d autorisation envoyée ')
     return redirect( "https://talao.co/api/v1/authorize" + '?' + urlencode(data))
+
+@main.route('/ask_certificate', methods=['GET', 'POST'])
+@login_required
+def ask_certificate():
+    if request.method == 'GET' :
+        did = session['did_referent']
+        return render_template('ask_certificate.html', did = did)
+    if request.method == 'POST' :
+        did = session['did_referent']
+        user = User.query.filter_by(did = did).first()
+        new_certif = Pending_certificate(user_id=user.id, title=request.form['title'],
+                        description=request.form['description'], start_date= request.form['start_date'],
+                        end_date=request.form['end_date'], message=request.form['message'])
+        db.session.add(new_certif)
+        db.session.commit()
+        return redirect('/profile')
 
 @main.route('/callback')
 @login_required
@@ -213,8 +232,16 @@ def callback():
             print(endpoint_response.json())
             del session['state']
             del session['endpoint']
+            if endpoint_response.status_code == 400:
+                flash('There was a problem with the request', 'warning')
+                return render_template('/profile')
+            flash('Referent added', 'success')
+            if session['asking']:
+                del session['asking']
+                return redirect('/ask_certificate')
+            del session['asking']
             del session['did_referent']
-            return "Referent added"
+            return render_template('/profile')
         elif session['endpoint'] == 'user_updates_company_settings' :
             headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer %s' % token_data['access_token']}
             data = {}
@@ -232,9 +259,10 @@ def callback():
             del session['certificate_type']
             del session['certificate_to_be_issued']
             print(endpoint_response.json())
-            try:
-                msg = endpoint_response.json()['detail']
-            except:
-                msg = endpoint_response.json()['link']
-            return render_template('certificate_issued.html', msg = msg)
+            if endpoint_response.status_code == 400:
+                error = endpoint_response.json()['detail']
+                flash('There was a problem with the request: {}'.format(error), 'warning')
+                return render_template('/profile')
+            flash('Certificate issued', 'success')
+            return redirect('/profile')
     return 'Probleme de token'

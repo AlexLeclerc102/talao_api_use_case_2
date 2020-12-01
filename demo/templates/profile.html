@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Welcome, {{ name }}!
-</h1>
-<h2 class="subtitle">
-  Your Talao <strong>username</strong> is : {{username}} <br>
-  Your Talao <strong>Did</strong> is : {{did}} <br>
-  <a href="/update_company_settings"><button>Update company information</button></a>
-</h2>
+<div class="row justify-content-center">
+  <div class="card shadow">
+    <div class="card-header">
+      <h1>
+        Welcome, {{ name }}!
+      </h1>
+    </div>
+    <div class="card-body">
+      <h3 class="my-5">
+        Your Talao <strong>username</strong> is : {{username}} <br><br>
+        Your Talao <strong>Did</strong> is : {{did}} <br>
+      </h3>
+      <a class="my-3" href="/update_company_settings">
+        <button class="btn btn-primary">Update company information</button>
+      </a>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

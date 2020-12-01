@@ -4,20 +4,17 @@
 <div class="row justify-content-center">
   <div class="card shadow">
     <div class="card-header">
-      <h1>Issue an experience certificate to {{name}}:</h1>
+      <h1>Ask for an experience certificate:</h1>
     </div>
     <div class="card-body text-center">
-      <form name="form" action="/issue_experience" method="POST">
+      <form name="form" action="/ask_certificate" method="POST">
         <div class="form-group"><label><strong>Did</strong><br></label><input class="form-control text-center" value={{did}}  name="did" readonly ></div>
         <div class="form-group"><label><strong>Title</strong><br></label><input class="form-control text-center" type="text" name="title" required ></div>
         <div class="form-group"><label><strong>Description</strong><br></label><textarea class="form-control" style="width:800px; height:200px;" type="text" name="description" required ></textarea></div>
         <div class="form-group"><label><strong>Start date (YYYY-MM-DD)</strong><br></label><input class="form-control text-center"  type="text" name="start_date" required ></div>
         <div class="form-group"><label><strong>End date (YYYY-MM-DD)</strong><br></label><input class="form-control text-center"  type="text" name="end_date" required ></div>
-        <div class="form-group"><label><strong>Score recommendation (0-5)</strong><br></label><input class="form-control text-center"  type="number" name="score_recommendation" required ></div>
-        <div class="form-group"><label><strong>Score delivery (0-5)</strong><br></label><input class="form-control text-center"  type="number" name="score_delivery" required ></div>
-        <div class="form-group"><label><strong>Score schedule (0-5)</strong><br></label><input class="form-control text-center"  type="number" name="score_schedule" required ></div>
-        <div class="form-group"><label><strong>Score communication (0-5)</strong><br></label><input class="form-control text-center"  type="number" name="score_communication" required ></div>
-        <div class="form-group"><button type="submit">Add</button></div>
+        <div class="form-group"><label><strong>Message for the emeter</strong><br></label><input class="form-control text-center"  type="text" name="message" required ></div>
+        <div class="form-group"><button type="submit">Ask</button></div>
       </form>
     </div>
   </div>
